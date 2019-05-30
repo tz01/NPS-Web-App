@@ -5,14 +5,14 @@ function getState(){
 }
 
 function getVisitor(){
-	var request = new XMLHttpRequest()
-	request.open('GET','https://developer.nps.gov/api/v1/visitorcenters',true)
-	request.onload=function(){
-		var data= JSON.parse(this.response)
-		data.forEach(visitorCenter=>{
-			console.log(visitorCenter.description)
-		})
-	}
-	request.send()
-
-}
+	//send GET request to National Parks API
+	$(function(){
+		$.ajax({
+			type: 'GET',
+			url:'https://developer.nps.gov/api/v1/visitorcenters'
+			success: function(data){
+				console.log('success', data);
+			}
+		});
+	});
+	
