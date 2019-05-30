@@ -1,20 +1,18 @@
-var a=document.getElementById("states");
+function getState(){
+	var a=document.getElementById("states");
+	var b=a.options[a.selectedIndex].value;
+	document.getElementById("demo").innerHTML = "You selected: " + b
+}
 
-//function called when state is selected
-function call_NPS(value){
-	$.ajax({
-		url:url,
-		type:'GET',
-		dataType:'json',
-		data:{
-			stateCode:(a.options[a.slectedIndex].value);
-		},
-		success:function(data){
-			var data=JSON.parse(this.response)
-			data.forEach(park=>{
-				//Log each park's name
-				console.log(park.addresses)
-			})
-		}
-	})
+function getVisitor(){
+	var request = new XMLHttpRequest()
+	request.open('GET','https://developer.nps.gov/api/v1/visitorcenters',true)
+	request.onload=function(){
+		var data= JSON.parse(this.response)
+		data.forEach(visitorCenter=>{
+			console.log(visitorCenter.description)
+		})
+	}
+	request.send()
+
 }
