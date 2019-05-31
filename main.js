@@ -1,7 +1,6 @@
 function getState(){
-	var a=document.getElementById("states");
-	var b=a.options[a.selectedIndex].value;
-	document.getElementById("demo").innerHTML = "You selected: " + b;
+	var a=document.getElementById("states").value;
+	document.getElementById("demo").innerHTML = "You selected: " + a;
 }
 
 function getVisitor(){
