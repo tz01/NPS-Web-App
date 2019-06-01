@@ -7,5 +7,3 @@ $.ajax({
 		console.log('success', data);
 			}
 		});
-
-	
