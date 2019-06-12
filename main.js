@@ -16,11 +16,11 @@ $(document).ready(function () {
 	        success: function(data){
 	          getInfo(data);
 	          for (var url in imagesUrls){
-	            var elem = document.createElement("img");
-              elem.src = url;
-              document.getElementById("display").appendChild(elem);
+	          var elem = document.createElement("img");
+		  elem.src = url;
+		  document.getElementById("display").appendChild(elem);
 	          }
-			    },
+	       },
       	});
       }
     });
