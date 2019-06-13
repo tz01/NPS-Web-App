@@ -16,7 +16,7 @@ $(document).ready(function () {
 	        success: function(data){
 	          getInfo(data);
 	          for (var url in imagesUrls){
-	            display.appendChild(document.createElement('img')).src = imagesUrls[url];;
+	            display.appendChild(document.createElement('img')).src = imagesUrls[url];
 	          }
 	       },
       	});
