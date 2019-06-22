@@ -1,9 +1,126 @@
-.display img{
-  display:flex;
-  flex-wrap:wrap;
+.header {
+  background-image: url('https://images.unsplash.com/photo-1469559845082-95b66baaf023?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80');
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  background-repeat:no-repeat;
 }
 
-img{
-  width:250px;
-  height: 250px;
+.overlay {
+  position: absolute;
+  min-height: 100%;
+  min-width: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
 }
+
+.intro {
+  left: 50%;
+  position: absolute;
+  top: 45%;
+  transform: translate(-50%, -55%);
+  text-align: center;
+}
+.intro h1 {
+  color: white;
+  font-weight:bold;
+}
+
+.description button {
+  border:1px solid #fff;
+  border-radius: 0;
+  color:#fff;
+}
+
+.description button:hover {
+  border:1px solid #000;
+  color:#000;
+}
+
+.display{
+	display: flex;
+	position:relative;
+	height:1000px;
+	border: 5px solid black;
+  	flex-flow: row wrap;
+  	justify-content: space-evenly;
+  	overflow-y:scroll;
+}
+
+.display h2{
+	color: black;
+  	font-weight:bold;
+  	height:2rem;
+  	margin-top: 10px;
+  	position:absolute;
+}
+
+.imageContainer{
+	margin-top:70px;
+	position:relative;
+	text-align: center;
+	padding:0px;
+	overflow:hidden;
+	height:350px;
+}
+
+.image{
+	display:block;
+	width:300px;
+    height:350px;
+    margin:10px;
+    border: 3px solid black;
+}
+
+.imageOverlay{
+	position:absolute;
+	display:inline-block;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	height:100%;
+	width:100%;
+	opacity:0;
+	transition:.5s ease;
+	background: rgba(0, 0, 0, 0.6);
+	overflow:hidden;
+}
+
+.imageContainer:hover .imageOverlay{
+	opacity: 1;
+}
+
+.overlayText{
+	color:white;
+	font-size:20px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	-webkit-transform:translate(-50%,-50%);
+	-ms-transform:translate(-50%,-50%);
+	trasnform:translate(-50%,-50%);
+	text-align:center;
+
+}
+
+#parkInfo{
+	height:1000px;
+  	overflow-y:scroll;
+  	border: 5px solid green;
+}
+
+#infoHeading{
+	color: black;
+  	font-weight:bold;
+  	height:2rem;
+  	margin-top: 10px;
+  	text-align:center;
+}
+
+#tabs{
+	margin-top:40px;
+	position:relative;
+}
+
