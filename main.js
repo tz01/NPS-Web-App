@@ -513,7 +513,7 @@ $(document).ready(function () {
 	        			var ovText=document.createTextNode(campgrounds[t]["weatheroverview"]);
 	        			overview.appendChild(ovText);
 	        		}else{
-	        			var ovtext=document.createTextNode("Weather overview: Sorry, the weather overview for this campground is currently unavaliable.")
+	        			var ovtext=document.createTextNode("Weather overview: Sorry, the weather overview for this campground is currently unavaliable.");
 	        			overview.appendChild(ovtext);
 	        		}
 					readmore.appendChild(overview);
@@ -525,7 +525,7 @@ $(document).ready(function () {
 	        			var regsText=document.createTextNode(campgrounds[t]["regulationsoverview"]);
 	        			regs.appendChild(regsText);
 				}else{
-	        			var regsText=document.createTextNode("Regulations overview: Sorry, the regulations overview for this campground is currently unavaliable.")
+	        			var regsText=document.createTextNode("Regulations overview: Sorry, the regulations overview for this campground is currently unavaliable.");
 	        			regs.appendChild(regsText);
 	        		}
 	        		readmore.appendChild(regs);
