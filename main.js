@@ -14,9 +14,7 @@ $(document).ready(function () {
     $("#submit").click(function (e) {             //if user presses submit, clear display of parks and ensure user has chosen a state
     	$("#parks").html("");
         if ($("#states").val() == "Select") {
-            alert("Select a state");
-            //$("#parks").hide();
-            //$("#parkInfo").hide();  
+            alert("Select a state");  
         }else{
             $("#parks").show();
             $("#parkInfo").show();
@@ -24,12 +22,12 @@ $(document).ready(function () {
 	        	type: 'GET',
         		url: 'https://developer.nps.gov/api/v1/parks?stateCode='+$("#states").val()+'&fields=images&api_key=ggvKIJXPJksoGFESOfN9FcpDKLkPW7gTXQU47x24',
 	       		datatype:'jsonp',
-	       		beforeSend: function() {
-     				$('#loader').show();
-  				},
-  				complete: function(){
+	       		beforeSend: function() {     //Show spinner while request loads
+     				$('#loader').show();       
+  			},
+  			complete: function(){        //Hide spinner when request is completed
      				$('#loader').hide();
-  				},
+  			},
 	        	success: function(data){
 	          		getInfo(data);
 	          		addImagesandOverlay();
@@ -42,30 +40,30 @@ $(document).ready(function () {
         }
     });
 
-    //If picture is clicked on, direct user to tabs and display park's information
+    //If picture is clicked on, direct user to tabs and display park's information in tabs
     $(document).on('click','.link',function(event){
-    	clearTabs();                              //clears tabs
-	    var parkName = $(this).attr("id");        //gets name of park that is clicked on
-   		pCode=parksAndCodes[parkName];            //finds code of park that is clicked on
+    	clearTabs();                                       //clears tabs
+	var parkName = $(this).attr("id");                 //gets name of park that is clicked on
+   	pCode=parksAndCodes[parkName];                     //finds code of park that is clicked on
     	var p = document.createElement("p");  
     	var t = document.createTextNode(parksAndDescriptions[parkName]);    
-    	p.appendChild(t);                         //Appends description
+    	p.appendChild(t);                                  //Appends description
       	$("#description").append(p);
       	callVisitorCenters();
-   		callCampgrounds();
-   		callAlerts();
-   		callArticles();
-   		callEvents();
-   		callNews();
-   		callEducation();
-	});
+   	callCampgrounds();
+   	callAlerts();
+   	callArticles();
+   	callEvents();
+   	callNews();
+   	callEducation();
+    });
 
     //sets up Tabs 
-	function setUpTabs(){
-		$( "#tabs" ).tabs({
-    		heightStyle:"fill",
+    function setUpTabs(){
+	$( "#tabs" ).tabs({
+    	heightStyle:"fill",
     	});
-	}
+     }
 
     //Returns names, descriptions, parkCodes, and images of parks within selected state  
     function getInfo(data){
@@ -119,11 +117,11 @@ $(document).ready(function () {
 	        var textdiv=document.createElement("div"); 
 	        textdiv.setAttribute("class","overlayText");
 	        var aTag = document.createElement('a');
-			aTag.setAttribute('href',"#parkInfo");
-			aTag.setAttribute('class',"link");
-			aTag.setAttribute('id',parksAndImages[parkUrl]);
-			aTag.innerHTML = parksAndImages[parkUrl];                   //Places park name and link to #parkinfo on overlay
-			textdiv.appendChild(aTag)
+		aTag.setAttribute('href',"#parkInfo");
+		aTag.setAttribute('class',"link");
+		aTag.setAttribute('id',parksAndImages[parkUrl]);
+		aTag.innerHTML = parksAndImages[parkUrl];                   //places park name and link to display of images on overlay
+		textdiv.appendChild(aTag)
 	        overlay.append(textdiv);                                 
 	     }
     }
@@ -140,7 +138,7 @@ $(document).ready(function () {
     	$("#campgrounds").html("");
     }
 
-    //calls Alerts from National Parks API
+    //calls alerts from National Parks API and appends names and descriptions of alerts to alerts tab
     function callAlerts(){
     	var alertDescriptions=[];
 		var titles=[];
@@ -157,7 +155,7 @@ $(document).ready(function () {
 	        		$("#alerts").html("Sorry, there are no alerts related to this park.");
 	        	}
 	        	for(var k = 0; k < 50 && k < alerts.length; k++){
-        			alertDescriptions[k]=alerts[k]["description"];                     
+        			alertDescriptions[k]=alerts[k]["description"];                        //get titles, urls, and descriptions             
         			titles[k]=alerts[k]["title"];
         			alertUrls[k]=alerts[k]["url"];
       			}
@@ -165,21 +163,21 @@ $(document).ready(function () {
        			var tempVal;
         		for (var s = 0; s < titles.length; s++) {
          			tempKey = titles[s];
-          			tempVal = alertDescriptions[s];
+          			tempVal = alertDescriptions[s];                                       //create key value object of titles and descriptions
           			titlesAndDescriptions[tempKey] = tempVal;        
       			} 
       			var fillKey;
       			var fillVal;
       			for (var m=0;m<titles.length;m++){
       				fillKey=titles[m];
-      				fillVal=alertUrls[m];
+      				fillVal=alertUrls[m];                                                //creates key value object of titles and urls
       				titlesAndUrls[fillKey]=fillVal;
       			}
-      			for (var key in titlesAndDescriptions){                       //Appends names and descriptions of alerts to alerts tab
+      			for (var key in titlesAndDescriptions){                      
       				var h = document.createElement("h3");
     				var aElem = document.createElement('a');                          
-					aElem.setAttribute('href',titlesAndUrls[key]);
-					aElem.innerHTML = key;
+				aElem.setAttribute('href',titlesAndUrls[key]);                      //append titles, urls, and descriptions to tab
+				aElem.innerHTML = key;
     				h.appendChild(aElem);
       				$("#alerts").append(h);
       				var p = document.createElement("p");
@@ -189,13 +187,13 @@ $(document).ready(function () {
       			}
 	        },
 	        error: function(xhr, status, error){
-	        		var errorMessage = xhr.status + ': ' + xhr.statusText
-         			alert('Alerts Error - ' + errorMessage + ". Please contact tzhong00@gmail.com. Thank you!");
+	        	var errorMessage = xhr.status + ': ' + xhr.statusText
+         		alert('Alerts Error - ' + errorMessage + ". Please contact tzhong00@gmail.com. Thank you!");
 	        }
 	    });
     }
 
-    //calls Articles from National Parks API
+    //calls Articles from National Parks API and appends name, description, and link of article to articles tab
     function callArticles(){
     	var articleDescriptions=[];
 		var articlesTitles=[];
@@ -233,7 +231,7 @@ $(document).ready(function () {
       				artTitlesAndUrls[shortKey]=shortVal;
       			}
 
-      			for (var key in articlesTD){                                       //Appends name, description, and link of article to articles tab
+      			for (var key in articlesTD){                                       
       				var h = document.createElement("h3");
     				var aEm = document.createElement('a');
 					aEm.setAttribute('href',artTitlesAndUrls[key]);
@@ -253,7 +251,7 @@ $(document).ready(function () {
     	})
     }
 
-    //calls Events from National Parks API
+    //calls Events from National Parks API and append title, description, contact info, and event dates to events tab
     function callEvents(){
     	$.ajax({
     		type:'GET',
@@ -264,18 +262,18 @@ $(document).ready(function () {
     			if (events.length==0){
 	        		$("#events").html("Sorry, there are no events related to this park.");
 	        	}
-        		for(var g = 0; g < 50 && g < events.length; g++){                                  //Append title and description of event to events tab
+        		for(var g = 0; g < 50 && g < events.length; g++){                                  
         			var h = document.createElement("h3");
         			h.append(events[g]["title"]);
         			$("#events").append(h);
         			$("#events").append(events[g]["description"]); 
 
         			if (events[g]["contactname"]==""){      
-        				var p = document.createElement("p");                                       //append to events tab
+        				var p = document.createElement("p");                                       
         				var t=document.createTextNode("Sorry, there is no contact name for this event.");
         				p.appendChild(t);                                        
-        			}else{                                                                         //If contact name, contact email address, and contact telephone number exists,
-        				var p = document.createElement("p");                                       //append to events tab
+        			}else{                                                                       
+        				var p = document.createElement("p");                                       
         				var t=document.createTextNode("Contact Name: ");
         				p.appendChild(t);
     					var d = document.createTextNode(events[g]["contactname"]);
@@ -316,7 +314,7 @@ $(document).ready(function () {
 
 
 
-        			if ((events[g]["dates"]===undefined)||(events[g]["dates"].length==0)){    //Append event dates to events tab
+        			if ((events[g]["dates"]===undefined)||(events[g]["dates"].length==0)){    
         				var eventDates = document.createElement("p");
         				var d = document.createTextNode("Sorry, the dates for this event currently are not avaliable.");
         				eventDates.appendChild(d);
@@ -338,7 +336,7 @@ $(document).ready(function () {
 	        }
     	})
     }
-    //calls News from National Parks API
+    //calls News from National Parks API and appends title, urls, and description of news to news tab
     function callNews(){
     	var newsDescriptions=[];
 		var newsTitles=[];
@@ -393,7 +391,7 @@ $(document).ready(function () {
     	})
     }
 
-    //calls Lesson Plans from National Parks API
+    //calls Lesson Plans from National Parks API and appends grade level, title, link, and description to lesson plans tab
     function callEducation(){
     	$.ajax({
     		type:'GET',
@@ -404,7 +402,7 @@ $(document).ready(function () {
     			if (education.length==0){
 	        		$("#education").html("Sorry, there are no lesson plans related to this park.");
 	        	}
-    			for(var e = 0; e < 50 && e < education.length; e++){                      //Append name, description, and link to lesson plan to lesson plans tab
+    			for(var e = 0; e < 50 && e < education.length; e++){                     
         			var h = document.createElement("h3");
         			var aLink=document.createElement("a");
         			aLink.setAttribute('href',education[e]["url"]); 
@@ -429,7 +427,7 @@ $(document).ready(function () {
     	})
     }
 
-    //calls Visitor Centers from National Parks API
+    //calls Visitor Centers from National Parks API and appends name, description, link and directions info to visitor centers tab
     function callVisitorCenters(){
     	$.ajax({
       		type:'GET',
@@ -440,8 +438,8 @@ $(document).ready(function () {
 	        	if (visitorcenters.length==0){
 	        		$("#visitorcenters").html("Sorry, there are no visitor centers related to this park.");
 	        	}
-	        	for(var w = 0; w < 50 && w < visitorcenters.length; w++){                 //Append name, link, description, and directions info  
-        			var h =document.createElement("h3");								  //of visitor center to visitorcenters tab
+	        	for(var w = 0; w < 50 && w < visitorcenters.length; w++){                
+        			var h =document.createElement("h3");								  
         			if (visitorcenters[w]["url"]!=""){                                   
         				var aLnk=document.createElement("a");
         				aLnk.setAttribute('href',visitorcenters[w]["url"]);
@@ -474,7 +472,7 @@ $(document).ready(function () {
       	});
     }
 
-    //calls Campgrounds from National Parks API
+    //calls Campgrounds from National Parks API and appends name, description, directions link, weather overview, and regulations overview to campgrounds tab
     function callCampgrounds(){
     	$.ajax({
     		type:'GET',
@@ -485,8 +483,8 @@ $(document).ready(function () {
 	        	if (campgrounds.length==0){
 	        		$("#campgrounds").html("Sorry, there are no campgrounds related to this park.");
 	        	}
-	        	for (var t=0;t<50 && t<campgrounds.length;t++){                        //Append name, description, and link to directions of 
-	        		var h =document.createElement("h3");                               //campground to campgrounds tab
+	        	for (var t=0;t<50 && t<campgrounds.length;t++){                        
+	        		var h =document.createElement("h3");                             
 	        		if (campgrounds[t]["directionsUrl"]!=""){
 	        			var link=document.createElement("a");
 	        			link.setAttribute('href',campgrounds[t]["directionsUrl"]);
