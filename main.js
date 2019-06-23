@@ -141,10 +141,10 @@ $(document).ready(function () {
     //calls alerts from National Parks API and appends names and descriptions of alerts to alerts tab
     function callAlerts(){
     	var alertDescriptions=[];
-		var titles=[];
-		var titlesAndDescriptions={};
-		var alertUrls=[];
-		var titlesAndUrls=[];
+	var titles=[];
+	var titlesAndDescriptions={};
+	var alertUrls=[];
+	var titlesAndUrls=[];
     	$.ajax({
 	        type:'GET',
 	        url:'https://developer.nps.gov/api/v1/alerts?parkCode='+pCode+'&api_key=ggvKIJXPJksoGFESOfN9FcpDKLkPW7gTXQU47x24',
@@ -176,7 +176,7 @@ $(document).ready(function () {
       			for (var key in titlesAndDescriptions){                      
       				var h = document.createElement("h3");
     				var aElem = document.createElement('a');                          
-				aElem.setAttribute('href',titlesAndUrls[key]);                      //append titles, urls, and descriptions to tab
+				aElem.setAttribute('href',titlesAndUrls[key]);                      //use both objects above to append titles, urls, and descriptions to tab
 				aElem.innerHTML = key;
     				h.appendChild(aElem);
       				$("#alerts").append(h);
@@ -196,10 +196,10 @@ $(document).ready(function () {
     //calls Articles from National Parks API and appends name, description, and link of article to articles tab
     function callArticles(){
     	var articleDescriptions=[];
-		var articlesTitles=[];
-		var articlesTD={};
-		var articlesUrls=[];
-		var artTitlesAndUrls={};
+	var articlesTitles=[];
+	var articlesTD={};
+	var articlesUrls=[];
+	var artTitlesAndUrls={};
     	$.ajax({
     		type:'GET',
     		url:'https://developer.nps.gov/api/v1/articles?parkCode='+pCode+'&api_key=ggvKIJXPJksoGFESOfN9FcpDKLkPW7gTXQU47x24',
@@ -210,7 +210,7 @@ $(document).ready(function () {
 	        		$("#articles").html("Sorry, there are no articles related to this park.");
 	        	}
     			for(var r = 0; r < 50 && r< articles.length; r++){
-        			articleDescriptions[r]=articles[r]["listingdescription"];
+        			articleDescriptions[r]=articles[r]["listingdescription"];         //get descriptions, titles and urls
         			articlesTitles[r]=articles[r]["title"];
         			articlesUrls[r]=articles[r]["url"];
       			}
@@ -218,7 +218,7 @@ $(document).ready(function () {
       			var articleKey;
       			var articleVal;
       			for (var a=0;a<articlesTitles.length;a++){
-      				articleKey=articlesTitles[a];
+      				articleKey=articlesTitles[a];           			  //create key value object of titles and descriptions
       				articleVal=articleDescriptions[a];
       				articlesTD[articleKey]=articleVal;
       			}
@@ -226,7 +226,7 @@ $(document).ready(function () {
       			var shortKey;
       			var shortVal;
       			for (var j=0;j<articlesTitles.length;j++){
-      				shortKey=articlesTitles[j];
+      				shortKey=articlesTitles[j];                                       //create key value object of titles and urls
       				shortVal=articlesUrls[j];
       				artTitlesAndUrls[shortKey]=shortVal;
       			}
@@ -234,8 +234,8 @@ $(document).ready(function () {
       			for (var key in articlesTD){                                       
       				var h = document.createElement("h3");
     				var aEm = document.createElement('a');
-					aEm.setAttribute('href',artTitlesAndUrls[key]);
-					aEm.innerHTML = key;
+				aEm.setAttribute('href',artTitlesAndUrls[key]);                  //use both objects above to append title, urls, and descriptions to tab
+				aEm.innerHTML = key;
     				h.appendChild(aEm);
       				$("#articles").append(h);
       				var p = document.createElement("p");
@@ -263,7 +263,7 @@ $(document).ready(function () {
 	        		$("#events").html("Sorry, there are no events related to this park.");
 	        	}
         		for(var g = 0; g < 50 && g < events.length; g++){                                  
-        			var h = document.createElement("h3");
+        			var h = document.createElement("h3");                                 //Append title and description to tab
         			h.append(events[g]["title"]);
         			$("#events").append(h);
         			$("#events").append(events[g]["description"]); 
@@ -274,7 +274,7 @@ $(document).ready(function () {
         				p.appendChild(t);                                        
         			}else{                                                                       
         				var p = document.createElement("p");                                       
-        				var t=document.createTextNode("Contact Name: ");
+        				var t=document.createTextNode("Contact Name: "); 	       //Append contact name to tab if exists
         				p.appendChild(t);
     					var d = document.createTextNode(events[g]["contactname"]);
     					p.appendChild(d);
@@ -289,7 +289,7 @@ $(document).ready(function () {
         				email.appendChild(t);
     					var d = document.createTextNode(events[g]["contactemailaddress"]);
     					email.appendChild(d);
-        			}else{
+        			}else{                     						//Append contact email address to tab if exists
         				var email= document.createElement("p");                                       
         				var t=document.createTextNode("Sorry, there is no contact email address for this event.");
         				email.appendChild(t);        
@@ -301,10 +301,10 @@ $(document).ready(function () {
         			if (events[g]["contacttelephonenumber"]!=""){
         				var number = document.createElement("p");
         				var t=document.createTextNode("Contact Telephone Number: ");
-        				number.appendChild(t);
+        				number.appendChild(t); 			
     					var d = document.createTextNode(events[g]["contacttelephonenumber"]);
     					number.appendChild(d);
-        			}else{
+        			}else{									//Append contact number to tab if exists
         				var number = document.createElement("p");
         				var t=document.createTextNode("Sorry, there is no contact telephone number for this event.");
         				number.appendChild(t);
@@ -318,7 +318,7 @@ $(document).ready(function () {
         				var eventDates = document.createElement("p");
         				var d = document.createTextNode("Sorry, the dates for this event currently are not avaliable.");
         				eventDates.appendChild(d);
-        			}else{
+        			}else{									//Append event dates to tab if exists
         				var dates=(events[g]["dates"]).toString();
         				var eventDates = document.createElement("p");
         				var t=document.createTextNode("Dates: ");
@@ -339,10 +339,10 @@ $(document).ready(function () {
     //calls News from National Parks API and appends title, urls, and description of news to news tab
     function callNews(){
     	var newsDescriptions=[];
-		var newsTitles=[];
-		var newsTD={};
-		var newsUrls=[];
-		var newsTitlesAndUrls={};
+	var newsTitles=[];
+	var newsTD={};
+	var newsUrls=[];
+	var newsTitlesAndUrls={};
     	$.ajax({
     		type:'GET',
     		url:'https://developer.nps.gov/api/v1/newsreleases?parkCode='+pCode+'&api_key=ggvKIJXPJksoGFESOfN9FcpDKLkPW7gTXQU47x24',
@@ -353,7 +353,7 @@ $(document).ready(function () {
 	        		$("#news").html("Sorry, there are no news related to this park.");
 	        	}
     			for(var n = 0; n < 50 && n< news.length; n++){
-        			newsDescriptions[n]=news[n]["abstract"];
+        			newsDescriptions[n]=news[n]["abstract"];			//get descriptions, titles, and urls
         			newsTitles[n]=news[n]["title"];
         			newsUrls[n]=news[n]["url"];
       			}
@@ -361,7 +361,7 @@ $(document).ready(function () {
       			var newsVal;
       			for (var b=0;b<newsTitles.length;b++){
       				newsKey=newsTitles[b];
-      				newsVal=newsDescriptions[b];
+      				newsVal=newsDescriptions[b];  					//create key value object of titles and descriptions
       				newsTD[newsKey]=newsVal;
       			}
       			var pholderKey;
@@ -369,13 +369,13 @@ $(document).ready(function () {
       			for (var c=0;c<newsTitles.length;c++){
       				pholderKey=newsTitles[c];
       				pholderVal=newsUrls[c];
-      				newsTitlesAndUrls[pholderKey]=pholderVal;
+      				newsTitlesAndUrls[pholderKey]=pholderVal;			//create key value object of titles and urls
       			}
       			for (var key in newsTD){
       				var h = document.createElement("h3");                          
     				var a = document.createElement('a');
-					a.setAttribute('href',newsTitlesAndUrls[key]);
-					a.innerHTML = key;
+				a.setAttribute('href',newsTitlesAndUrls[key]);			//use both objects above to append titles, urls, and descriptions to tab
+				a.innerHTML = key;
     				h.appendChild(a);
       				$("#news").append(h);
       				var p = document.createElement("p");
@@ -405,19 +405,19 @@ $(document).ready(function () {
     			for(var e = 0; e < 50 && e < education.length; e++){                     
         			var h = document.createElement("h3");
         			var aLink=document.createElement("a");
-        			aLink.setAttribute('href',education[e]["url"]); 
-        			aLink.innerHTML=education[e]["title"];
+        			aLink.setAttribute('href',education[e]["url"]); 		//get url
+        			aLink.innerHTML=education[e]["title"];				//place title as innerHTML
         			h.appendChild(aLink);
-        			$("#education").append(h);
-        			var gradeLvl = document.createElement("p");
-        			var gradeLvlText = document.createTextNode(education[e]["gradelevel"]);
+        			$("#education").append(h);					//append title and url to tab
+        			var gradeLvl = document.createElement("p");			
+        			var gradeLvlText = document.createTextNode(education[e]["gradelevel"]);	//get gradelevel
         			gradeLvl.appendChild(gradeLvlText);
         			gradeLvl.setAttribute('class','grades');
-      				$("#education").append(gradeLvl);
+      				$("#education").append(gradeLvl);					//append gravelevel to tab
         			var p = document.createElement("p");
-        			var t = document.createTextNode(education[e]["questionobjective"]);
+        			var t = document.createTextNode(education[e]["questionobjective"]);	//get description
         			p.appendChild(t);
-      				$("#education").append(p);
+      				$("#education").append(p);						//append description to tab
         		}
     		},
     		error: function(xhr, status, error){
@@ -442,23 +442,23 @@ $(document).ready(function () {
         			var h =document.createElement("h3");								  
         			if (visitorcenters[w]["url"]!=""){                                   
         				var aLnk=document.createElement("a");
-        				aLnk.setAttribute('href',visitorcenters[w]["url"]);
+        				aLnk.setAttribute('href',visitorcenters[w]["url"]);	//if url exists, append title and url to tab
         				aLnk.innerHTML=visitorcenters[w]["name"];
         				h.appendChild(aLnk);
         			}else{
-        				var t=document.createTextNode(visitorcenters[w]["name"]);
+        				var t=document.createTextNode(visitorcenters[w]["name"]);	//if not, append title only
         				h.appendChild(t);
         			}
         			$("#visitorcenters").append(h);
         			var p = document.createElement("p");
         			var text = document.createTextNode(visitorcenters[w]["description"]);
-        			p.appendChild(text);
+        			p.appendChild(text);							//append description
       				$("#visitorcenters").append(p);
       				var directionsInfo = document.createElement("p");
       				if (visitorcenters[w]["directionsInfo"]!=""){
-      					var directionsInfoText = document.createTextNode(visitorcenters[w]["directionsInfo"]);
+      					var directionsInfoText = document.createTextNode(visitorcenters[w]["directionsInfo"]);	
         				directionsInfo.appendChild(directionsInfoText);
-      				}else{
+      				}else{									//append directions info if it exists
       					var directionsInfoText = document.createTextNode("Sorry, no information about directions can be found for this park.");
         				directionsInfo.appendChild(directionsInfoText);
       				}
@@ -486,7 +486,7 @@ $(document).ready(function () {
 	        	for (var t=0;t<50 && t<campgrounds.length;t++){                        
 	        		var h =document.createElement("h3");                             
 	        		if (campgrounds[t]["directionsUrl"]!=""){
-	        			var link=document.createElement("a");
+	        			var link=document.createElement("a"); 				//Append name and directions link to tab if link exists
 	        			link.setAttribute('href',campgrounds[t]["directionsUrl"]);
 	        			link.innerHTML=campgrounds[t]["name"];
 	        			h.appendChild(link);
@@ -496,12 +496,12 @@ $(document).ready(function () {
 	        		}
 	        		$("#campgrounds").append(h);
 	        		var description=document.createElement("p");
-	        		var descriptionText=document.createTextNode(campgrounds[t]["description"]);
+	        		var descriptionText=document.createTextNode(campgrounds[t]["description"]); //Append description to tab
 	        		description.appendChild(descriptionText);
 	        		$("#campgrounds").append(description);
 
 	        		var readmore=document.createElement("details");                //Create details tag and append weather overview and regulations overview to details
-					var summary=document.createElement("summary");                 //Append details to campgrounds tab
+				var summary=document.createElement("summary");         //Append details to campgrounds tab
 	        		var summarytext=document.createTextNode("Read More");
 	        		summary.appendChild(summarytext);
 	        		readmore.appendChild(summary);
@@ -518,13 +518,13 @@ $(document).ready(function () {
 	        		}
 					readmore.appendChild(overview);
 
-					var regs=document.createElement("p");
-					if (campgrounds[t]["regulationsoverview"]!=""){
-						var regsLabel=document.createTextNode("Regulations overview: ");
+				var regs=document.createElement("p");
+				if (campgrounds[t]["regulationsoverview"]!=""){
+					var regsLabel=document.createTextNode("Regulations overview: ");
 	        			regs.appendChild(regsLabel);
 	        			var regsText=document.createTextNode(campgrounds[t]["regulationsoverview"]);
 	        			regs.appendChild(regsText);
-					}else{
+				}else{
 	        			var regsText=document.createTextNode("Regulations overview: Sorry, the regulations overview for this campground could not be found.")
 	        			regs.appendChild(regsText);
 	        		}
