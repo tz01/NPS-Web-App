@@ -15,10 +15,10 @@ $(document).ready(function () {
     	$("#parks").html("");
         if ($("#states").val() == "Select") {
             alert("Select a state");
-            $("#parks").hide();
-            $("#parkInfo").hide();  
+            //$("#parks").hide();
+            //$("#parkInfo").hide();  
         }else{
-        	$("#parks").show();
+            $("#parks").show();
             $("#parkInfo").show();
     		$.ajax({                              //Calls for parks and its images from National parks API
 	        	type: 'GET',
